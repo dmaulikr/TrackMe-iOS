@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TrackMe/LocationManager.swift"
-            timestampString = "485404246.974402"
+            timestampString = "485763028.6408"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
             landmarkName = "appWillTerminate()"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TrackMe/LocationManager.swift"
-            timestampString = "485404246.974402"
+            timestampString = "485763028.6408"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
             landmarkName = "appIsRelaunched()"
             landmarkType = "5">
          </BreakpointContent>
@@ -125,6 +125,160 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "15"
                   endingLineNumber = "15"
+                  offsetFromSymbolStart = "64">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TrackMeTests/TrackMeTests.swift"
+            timestampString = "485776289.004403"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "12"
+            endingLineNumber = "12"
+            landmarkName = "TrackMeTests"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TrackMeTests.TrackMeTests.__deallocating_deinit"
+                  moduleName = "TrackMeTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/haoboji/Documents/TrackMe/TrackMeTests/TrackMeTests.swift"
+                  timestampString = "485773311.721325"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TrackMeTests.TrackMeTests.init (invocation : Swift.Optional&lt;__ObjC.NSInvocation&gt;) -&gt; TrackMeTests.TrackMeTests"
+                  moduleName = "TrackMeTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/haoboji/Documents/TrackMe/TrackMeTests/TrackMeTests.swift"
+                  timestampString = "485773311.721693"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TrackMeTests.TrackMeTests.init (selector : ObjectiveC.Selector) -&gt; TrackMeTests.TrackMeTests"
+                  moduleName = "TrackMeTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/haoboji/Documents/TrackMe/TrackMeTests/TrackMeTests.swift"
+                  timestampString = "485773311.722017"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TrackMeTests.TrackMeTests.init () -&gt; TrackMeTests.TrackMeTests"
+                  moduleName = "TrackMeTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/haoboji/Documents/TrackMe/TrackMeTests/TrackMeTests.swift"
+                  timestampString = "485773311.722268"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "64">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TrackMeTests/TrackMeTests.swift"
+            timestampString = "485776289.004403"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "11"
+            endingLineNumber = "11">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TrackMeTests.TrackMeTests.__deallocating_deinit"
+                  moduleName = "TrackMeTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/haoboji/Documents/TrackMe/TrackMeTests/TrackMeTests.swift"
+                  timestampString = "485773311.725525"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TrackMeTests.TrackMeTests.init (invocation : Swift.Optional&lt;__ObjC.NSInvocation&gt;) -&gt; TrackMeTests.TrackMeTests"
+                  moduleName = "TrackMeTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/haoboji/Documents/TrackMe/TrackMeTests/TrackMeTests.swift"
+                  timestampString = "485773311.7257"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TrackMeTests.TrackMeTests.init (selector : ObjectiveC.Selector) -&gt; TrackMeTests.TrackMeTests"
+                  moduleName = "TrackMeTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/haoboji/Documents/TrackMe/TrackMeTests/TrackMeTests.swift"
+                  timestampString = "485773311.725998"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TrackMeTests.TrackMeTests.init () -&gt; TrackMeTests.TrackMeTests"
+                  moduleName = "TrackMeTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/haoboji/Documents/TrackMe/TrackMeTests/TrackMeTests.swift"
+                  timestampString = "485773311.726204"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
                   offsetFromSymbolStart = "64">
                </Location>
             </Locations>
