@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 import CoreData
 
-class MapController: UIViewController {
+class MapController: UIViewController, GMSMapViewDelegate {
 
     @IBOutlet var floatingBar: UINavigationItem!
 
@@ -19,6 +19,7 @@ class MapController: UIViewController {
     var mapView: GMSMapView?
     var selectedDate: NSDate?
     let dateFormatter = NSDateFormatter()
+    let timeFormatter = NSDateFormatter()
     let circleBlue: UIImageView
     let circleSky: UIImageView
     let circleRed: UIImageView
@@ -28,6 +29,7 @@ class MapController: UIViewController {
 
     required init?(coder aDecoder: NSCoder) {
         dateFormatter.dateFormat = "yyyy-MM-dd"
+        timeFormatter.dateFormat = "HH:mm"
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let circleImage = UIImage(named: "circle")!.imageWithRenderingMode(.AlwaysTemplate)
         circleRed = UIImageView(image: circleImage)
@@ -63,6 +65,7 @@ class MapController: UIViewController {
         mapView!.settings.myLocationButton = true
         mapView!.settings.indoorPicker = true
         self.view.insertSubview(mapView!, atIndex: 0)
+        mapView!.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -112,7 +115,6 @@ class MapController: UIViewController {
             (date) -> Void in
             self.floatingBar.title = self.dateFormatter.stringFromDate(date)
             self.selectedDate = self.dateFormatter.dateFromString(self.floatingBar.title!)
-            print(self.selectedDate)
             let locations = self.fetchLocations(self.selectedDate)
             self.updateMapViewByLocations(locations)
         }
@@ -149,7 +151,22 @@ class MapController: UIViewController {
             } else {
                 marker.iconView = circleBlue
             }
+            if (floatingBar.title == "All") {
+                marker.title = dateFormatter.stringFromDate(location.timestamp!)
+            } else {
+                marker.title = timeFormatter.stringFromDate(location.timestamp!)
+            }
             marker.map = mapView
         }
+    }
+
+    func mapView(mapView: GMSMapView, didTapInfoWindowOfMarker marker: GMSMarker) {
+        if (floatingBar.title != "All") {
+            return
+        }
+        self.floatingBar.title = marker.title
+        self.selectedDate = self.dateFormatter.dateFromString(self.floatingBar.title!)
+        let locations = self.fetchLocations(self.selectedDate)
+        self.updateMapViewByLocations(locations)
     }
 }
