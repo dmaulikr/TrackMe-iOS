@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import SwiftyJSON
+import ObjectMapper
 
 class SettingsController: UITableViewController {
 
@@ -19,6 +21,7 @@ class SettingsController: UITableViewController {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         self.managedObjectContext = appDelegate.managedObjectContext
         super.init(coder: aDecoder)
+        writeLocationToFile(fetchLocations())
     }
 
     override func viewDidLoad() {
@@ -65,6 +68,7 @@ class SettingsController: UITableViewController {
         let fetchRequest = NSFetchRequest()
         let entityDescription = NSEntityDescription.entityForName("Location", inManagedObjectContext: self.managedObjectContext)
         fetchRequest.entity = entityDescription
+        fetchRequest.resultType = NSFetchRequestResultType.ManagedObjectResultType
         var locations = NSArray?()
         do {
             locations = try self.managedObjectContext.executeFetchRequest(fetchRequest)
@@ -76,19 +80,34 @@ class SettingsController: UITableViewController {
     }
 
     func writeLocationToFile(locations: NSArray) {
+        // File name and path
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy-MM-DD_HH:mm:ss"
-        let file = formatter.stringFromDate(NSDate()) + "_MyTrack.json"
-        if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
-            let path = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent(file)
-
-            // writing
-            do {
-                try text.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
-            }
-            catch { /* error handling here */ }
-
+        formatter.dateFormat = "yyyy-MM-dd_HH:mm:ss"
+        let fileName = formatter.stringFromDate(NSDate()) + "_MyTrack.json"
+        let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
+        let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
+        let filePath = documentsDirectoryPath.URLByAppendingPathComponent(fileName)
+        // Prepare json object
+        let sample: Location = locations[0] as! Location
+        let test: [String: AnyObject] = ["aa": sample.altitude!, "bb": sample.latitude!]
+        let array = NSMutableArray()
+        array.addObject(test)
+        array.addObject(test)
+        let a = NSJSONSerialization.isValidJSONObject(array)
+        let json = JSON(locations)
+        let str = json.description
+        let data = str.dataUsingEncoding(NSUTF8StringEncoding)!
+        NSFileManager.defaultManager().createFileAtPath(filePath.path!, contents: nil, attributes: nil)
+        let file = NSFileHandle(forWritingAtPath: filePath.path!)
+        if (file != nil) {
+            file!.writeData(data)
         }
+//        do {
+//            let file = try NSFileHandle(forWritingToURL: filePath)
+//            file.writeData(data)
+//        } catch {
+//            print(error)
+//        }
     }
 
     /*
