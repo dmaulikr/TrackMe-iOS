@@ -61,6 +61,36 @@ class SettingsController: UITableViewController {
         }
     }
 
+    func fetchLocations() -> NSArray {
+        let fetchRequest = NSFetchRequest()
+        let entityDescription = NSEntityDescription.entityForName("Location", inManagedObjectContext: self.managedObjectContext)
+        fetchRequest.entity = entityDescription
+        var locations = NSArray?()
+        do {
+            locations = try self.managedObjectContext.executeFetchRequest(fetchRequest)
+        } catch {
+            let fetchError = error as NSError
+            print(fetchError)
+        }
+        return locations!
+    }
+
+    func writeLocationToFile(locations: NSArray) {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-DD_HH:mm:ss"
+        let file = formatter.stringFromDate(NSDate()) + "_MyTrack.json"
+        if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
+            let path = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent(file)
+
+            // writing
+            do {
+                try text.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+            }
+            catch { /* error handling here */ }
+
+        }
+    }
+
     /*
      override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
      let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
