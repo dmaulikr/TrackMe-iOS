@@ -12,7 +12,8 @@ import CoreData
 
 public class LocationManager: NSObject, CLLocationManagerDelegate {
 
-    public let manager: CLLocationManager
+    private let manager: CLLocationManager
+    private let sigManager: CLLocationManager
     public var on: Bool
     var managedObjectContext: NSManagedObjectContext
     var configuration: Configuration?
@@ -44,13 +45,16 @@ public class LocationManager: NSObject, CLLocationManagerDelegate {
         // Initialize manager
         self.manager = CLLocationManager()
         // Background update
-        self.manager.activityType = CLActivityType.AutomotiveNavigation
+        self.manager.activityType = CLActivityType.Fitness
         self.manager.allowsBackgroundLocationUpdates = true
         self.manager.requestAlwaysAuthorization()
+        self.sigManager = CLLocationManager()
+        sigManager.startMonitoringSignificantLocationChanges()
         super.init()
         // Set configuration
         loadConfiguration()
         self.manager.delegate = self
+        self.sigManager.delegate = self
     }
 
     public func start() {
@@ -112,38 +116,8 @@ public class LocationManager: NSObject, CLLocationManagerDelegate {
         // Adjust for the next goal
     }
 
-    // =====================================     NSNotificationCenter Methods (App LifeCycle)  ====================//
-    /********************************************************************************************************************
-     METHOD NAME: appWillTerminate
-     INPUT PARAMETERS: NSNotification object
-     RETURNS: None
-
-     OBSERVATIONS: The AppDelegate triggers this method when the App is about to be terminated (Removed from memory due to
-     a crash or due to the user killing the app from the multitasking feature). This call causes the plugin to stop
-     standard location services if running, and enable significant changes to re-start the app as soon as possible.
-     ********************************************************************************************************************/
-    func appWillTerminate() {
-
-        // - Stop Location Updates
-        self.manager.stopUpdatingLocation()
-
-        // - Enables Significant Location Changes services to restart the app ASAP
-        self.manager.startMonitoringSignificantLocationChanges()
+    public func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print(error)
     }
-    /********************************************************************************************************************
-     METHOD NAME: appIsRelaunched
-     INPUT PARAMETERS: NSNotification object
-     RETURNS: None
 
-     OBSERVATIONS: This method is called by the AppDelegate when the app starts. This method will stop the significant
-     change location updates and restart the standard location services if they where previously running (Checks saved
-     NSUserDefaults)
-     ********************************************************************************************************************/
-    func appIsRelaunched() {
-
-        // - Stops Significant Location Changes services when app is relaunched
-        self.manager.stopMonitoringSignificantLocationChanges()
-
-        self.start()
-    }
 }
