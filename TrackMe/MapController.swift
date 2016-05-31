@@ -101,15 +101,6 @@ class MapController: UIViewController, GMSMapViewDelegate {
         return locations!
     }
 
-    func generatePolyline(locations: NSArray) -> GMSPolyline {
-        let path = GMSMutablePath()
-        for i in 0 ..< locations.count {
-            let location: Location = locations[i] as! Location
-            path.addCoordinate(CLLocationCoordinate2D(latitude: location.latitude as! CLLocationDegrees, longitude: location.longitude as! CLLocationDegrees))
-        }
-        return GMSPolyline(path: path)
-    }
-
     @IBAction func pickDate(sender: UIBarButtonItem) {
         DatePickerDialog().show("DatePicker", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .Date) {
             (date) -> Void in

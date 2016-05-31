@@ -21,11 +21,12 @@ class SettingsController: UITableViewController {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         self.managedObjectContext = appDelegate.managedObjectContext
         super.init(coder: aDecoder)
-        writeLocationToFile(fetchLocations())
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let locations: NSArray? = fetchLocations()
+        writeLocationToFile(locations)
         isUpdating.on = LocationManager.shared.on
 
         // Uncomment the following line to preserve selection between presentations
@@ -64,11 +65,12 @@ class SettingsController: UITableViewController {
         }
     }
 
-    func fetchLocations() -> NSArray {
+    func fetchLocations() -> NSArray? {
         let fetchRequest = NSFetchRequest()
         let entityDescription = NSEntityDescription.entityForName("Location", inManagedObjectContext: self.managedObjectContext)
+        let predicate: NSPredicate = NSPredicate(format: "(speed > 0)")
         fetchRequest.entity = entityDescription
-        fetchRequest.resultType = NSFetchRequestResultType.ManagedObjectResultType
+        fetchRequest.predicate = predicate
         var locations = NSArray?()
         do {
             locations = try self.managedObjectContext.executeFetchRequest(fetchRequest)
@@ -79,35 +81,43 @@ class SettingsController: UITableViewController {
         return locations!
     }
 
-    func writeLocationToFile(locations: NSArray) {
+    func writeLocationToFile(locations: NSArray?) {
+        if (locations == nil || locations!.count == 0) {
+            return
+        }
         // File name and path
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd_HH:mm:ss"
+        formatter.dateFormat = "yyyy-MM-dd_HH.mm.ss"
         let fileName = formatter.stringFromDate(NSDate()) + "_MyTrack.json"
         let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
         let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
         let filePath = documentsDirectoryPath.URLByAppendingPathComponent(fileName)
+        NSFileManager.defaultManager().createFileAtPath(filePath.path!, contents: nil, attributes: nil)
+        let convertedLocations: NSMutableArray = NSMutableArray()
         // Prepare json object
-        let sample: Location = locations[0] as! Location
-        let test: [String: AnyObject] = ["aa": sample.altitude!, "bb": sample.latitude!]
-        let array = NSMutableArray()
-        array.addObject(test)
-        array.addObject(test)
-        let a = NSJSONSerialization.isValidJSONObject(array)
-        let json = JSON(locations)
+        for location in locations as! [Location] {
+            let convertedLocation: [String: AnyObject] = [
+                "timestampMs": String(Int(location.timestamp!.timeIntervalSince1970 * 1000)),
+                "latitudeE7": Int(location.latitude!.doubleValue * 10000000),
+                "longitudeE7": Int(location.longitude!.doubleValue * 10000000),
+                "accuracy": Int(location.horizontalAccuracy!),
+                "altitude": Int(location.altitude!),
+                "verticalAccuracy": Int(location.verticalAccuracy!),
+                "velocity": Int(location.speed!)
+            ]
+            convertedLocations.addObject(convertedLocation)
+        }
+        let wrappedLocations: [String: AnyObject] = [
+            "locations": convertedLocations
+        ]
+        print(NSJSONSerialization.isValidJSONObject(wrappedLocations))
+        let json = JSON(wrappedLocations)
         let str = json.description
         let data = str.dataUsingEncoding(NSUTF8StringEncoding)!
-        NSFileManager.defaultManager().createFileAtPath(filePath.path!, contents: nil, attributes: nil)
         let file = NSFileHandle(forWritingAtPath: filePath.path!)
         if (file != nil) {
             file!.writeData(data)
         }
-//        do {
-//            let file = try NSFileHandle(forWritingToURL: filePath)
-//            file.writeData(data)
-//        } catch {
-//            print(error)
-//        }
     }
 
     /*

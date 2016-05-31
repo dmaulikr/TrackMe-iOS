@@ -13,7 +13,6 @@ import CoreData
 public class LocationManager: NSObject, CLLocationManagerDelegate {
 
     private let manager: CLLocationManager
-    private let sigManager: CLLocationManager
     public var on: Bool
     var managedObjectContext: NSManagedObjectContext
     var configuration: Configuration?
@@ -48,13 +47,10 @@ public class LocationManager: NSObject, CLLocationManagerDelegate {
         self.manager.activityType = CLActivityType.Fitness
         self.manager.allowsBackgroundLocationUpdates = true
         self.manager.requestAlwaysAuthorization()
-        self.sigManager = CLLocationManager()
-        sigManager.startMonitoringSignificantLocationChanges()
         super.init()
         // Set configuration
         loadConfiguration()
         self.manager.delegate = self
-        self.sigManager.delegate = self
     }
 
     public func start() {
