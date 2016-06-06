@@ -59,40 +59,55 @@
             <objects>
                 <viewController title="Summary" id="8rJ-Kc-sve" customClass="SummaryController" customModule="TrackMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jho-0u-g7c"/>
-                        <viewControllerLayoutGuide type="bottom" id="MJ2-nZ-5Q3"/>
+                        <viewControllerLayoutGuide type="top" id="5BP-Qb-RJ5"/>
+                        <viewControllerLayoutGuide type="bottom" id="fld-Ca-qB8"/>
                     </layoutGuides>
-                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="kPG-mL-U0a">
+                    <view key="view" contentMode="scaleToFill" id="b6g-Li-02c">
                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2gQ-LX-PKK">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BbL-Ou-dSw" customClass="LineChartView" customModule="Charts">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="129" y="141" width="240" height="128"/>
-                                </variation>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="BbL-Ou-dSw" firstAttribute="top" secondItem="5BP-Qb-RJ5" secondAttribute="bottom" id="4Xv-2h-6dm"/>
+                            <constraint firstItem="fld-Ca-qB8" firstAttribute="top" secondItem="BbL-Ou-dSw" secondAttribute="bottom" constant="387" id="kEj-7e-AJJ"/>
+                            <constraint firstItem="BbL-Ou-dSw" firstAttribute="leading" secondItem="b6g-Li-02c" secondAttribute="leading" id="t8l-B1-z7u"/>
+                            <constraint firstAttribute="trailing" secondItem="BbL-Ou-dSw" secondAttribute="trailing" id="zc4-gj-y7l"/>
+                        </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="2gQ-LX-PKK"/>
+                                <exclude reference="BbL-Ou-dSw"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="4Xv-2h-6dm"/>
+                                <exclude reference="t8l-B1-z7u"/>
+                                <exclude reference="zc4-gj-y7l"/>
+                                <exclude reference="kEj-7e-AJJ"/>
                             </mask>
                         </variation>
-                        <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
-                            <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=regular" ambiguous="YES">
-                            <rect key="frame" x="0.0" y="0.0" width="800" height="800"/>
+                        <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
-                                <include reference="2gQ-LX-PKK"/>
+                                <include reference="BbL-Ou-dSw"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="4Xv-2h-6dm"/>
+                                <include reference="t8l-B1-z7u"/>
+                                <include reference="zc4-gj-y7l"/>
+                                <include reference="kEj-7e-AJJ"/>
                             </mask>
                         </variation>
-                    </scrollView>
+                    </view>
                     <navigationItem key="navigationItem" title="Title" id="S4B-7Z-3aV">
                         <barButtonItem key="leftBarButtonItem" image="back" id="gzA-rI-hVZ"/>
                         <barButtonItem key="rightBarButtonItem" image="forward" id="bC7-Bz-nuN"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="movingDistanceChart" destination="BbL-Ou-dSw" id="EGY-AB-zpz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>

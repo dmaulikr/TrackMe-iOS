@@ -1,8 +1,12 @@
 PODS:
+  - Charts (2.2.5):
+    - Charts/Core (= 2.2.5)
+  - Charts/Core (2.2.5)
   - GoogleMaps (1.13.2)
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
+  - Charts
   - GoogleMaps
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
 
@@ -16,6 +20,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
+  Charts: b48fcc8d7190de910ff9e9748f5360c8ea7856e5
   GoogleMaps: b20a103ff307f58392e603cf142e59d7e30374c1
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 

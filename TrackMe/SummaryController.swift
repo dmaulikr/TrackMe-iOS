@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import Charts
 
 class SummaryController: UIViewController {
 
+    @IBOutlet var movingDistanceChart: LineChartView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        movingDistanceChart.noDataText = "No Data"
         // Do any additional setup after loading the view, typically from a nib.
     }
 
