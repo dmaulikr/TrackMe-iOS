@@ -5,7 +5,6 @@ use_frameworks!
 
 target 'TrackMe' do
 pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
-pod 'ObjectMapper', '~> 1.3'
 pod 'GoogleMaps'
 end
 

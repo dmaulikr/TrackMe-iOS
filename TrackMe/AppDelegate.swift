@@ -59,15 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             LocationManager.shared.start()
         }
         sigManager!.startMonitoringSignificantLocationChanges()
-
-        // File name and path
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd_HH.mm.ss"
-        let fileName = "SignificantLocationChanges_" + formatter.stringFromDate(NSDate())
-        let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
-        let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
-        let filePath = documentsDirectoryPath.URLByAppendingPathComponent(fileName)
-        NSFileManager.defaultManager().createFileAtPath(filePath.path!, contents: nil, attributes: nil)
     }
 
     // MARK: - Core Data stack

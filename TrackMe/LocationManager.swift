@@ -57,7 +57,7 @@ public class LocationManager: NSObject, CLLocationManagerDelegate {
         on = true
         manager.startUpdatingLocation()
         if (!deferringUpdates) {
-            manager.allowDeferredLocationUpdatesUntilTraveled(100, timeout: 30)
+            // manager.allowDeferredLocationUpdatesUntilTraveled(1000, timeout: 60)
             deferringUpdates = true;
         }
     }
@@ -87,8 +87,7 @@ public class LocationManager: NSObject, CLLocationManagerDelegate {
 
     // MARK: - CLLocationManagerDelegate
     public func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
-        for location in locations {
+        for location in locations[0..<1] {
             let newLocation: Location = (NSEntityDescription.insertNewObjectForEntityForName("Location", inManagedObjectContext: self.managedObjectContext) as? Location)!
             newLocation.timestamp = location.timestamp
             newLocation.latitude = location.coordinate.latitude

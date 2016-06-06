@@ -9,24 +9,27 @@
 import UIKit
 import CoreData
 import SwiftyJSON
-import ObjectMapper
 
-class SettingsController: UITableViewController {
+protocol ImportLocationsDelegate {
+    func saveJsonToCoreData(filePath: NSURL)
+}
+
+class SettingsController: UITableViewController, ImportLocationsDelegate {
 
     @IBOutlet var isUpdating: UISwitch!
 
     var managedObjectContext: NSManagedObjectContext
+    var dataMessage: String
 
     required init?(coder aDecoder: NSCoder) {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         self.managedObjectContext = appDelegate.managedObjectContext
+        self.dataMessage = ""
         super.init(coder: aDecoder)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let locations: NSArray? = fetchLocations()
-        writeLocationToFile(locations)
         isUpdating.on = LocationManager.shared.on
 
         // Uncomment the following line to preserve selection between presentations
@@ -65,6 +68,67 @@ class SettingsController: UITableViewController {
         }
     }
 
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        // For export
+        if (indexPath.section == 2 && indexPath.row == 1) {
+            let filePath = generateFilePath()
+            let confirmExportView = UIAlertController(
+                title: "Exporting Locations",
+                message: "Export locations as " + filePath.lastPathComponent!,
+                preferredStyle: UIAlertControllerStyle.Alert)
+            confirmExportView.addAction(UIAlertAction(
+                title: "Cancel",
+                style: UIAlertActionStyle.Default,
+                handler: nil))
+            confirmExportView.addAction(UIAlertAction(
+                title: "Confirm",
+                style: UIAlertActionStyle.Default,
+                handler: {
+                    (alert: UIAlertAction!) in
+                    let locations = self.fetchLocations()
+                    self.writeLocationToFile(locations, filePath: filePath)
+                }))
+            self.presentViewController(confirmExportView, animated: true, completion: nil)
+        }
+    }
+
+    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if (section == 2) {
+            return dataMessage
+        }
+        return nil
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        switch segue.identifier! {
+        case "DistanceFilter":
+            if let destinationVC = segue.destinationViewController as? ConfigurationController {
+                destinationVC.category = destinationVC.DISTANCE_FILTER
+            }
+            break
+        case "DesiredAccuracy":
+            if let destinationVC = segue.destinationViewController as? ConfigurationController {
+                destinationVC.category = destinationVC.DESIRED_ACCURACY
+            }
+            break
+        case "ImportSegue":
+            if let destinationVC = segue.destinationViewController as? ImportController {
+                destinationVC.delegate = self
+            }
+        default:
+            break
+        }
+    }
+
+    @IBAction func sTrackMe(sender: UISwitch) {
+        if (sender.on) {
+            LocationManager.shared.start()
+        } else {
+            LocationManager.shared.stop()
+        }
+    }
+
     func fetchLocations() -> NSArray? {
         let fetchRequest = NSFetchRequest()
         let entityDescription = NSEntityDescription.entityForName("Location", inManagedObjectContext: self.managedObjectContext)
@@ -81,10 +145,7 @@ class SettingsController: UITableViewController {
         return locations!
     }
 
-    func writeLocationToFile(locations: NSArray?) {
-        if (locations == nil || locations!.count == 0) {
-            return
-        }
+    func generateFilePath() -> NSURL {
         // File name and path
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH.mm.ss"
@@ -92,7 +153,13 @@ class SettingsController: UITableViewController {
         let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
         let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
         let filePath = documentsDirectoryPath.URLByAppendingPathComponent(fileName)
-        NSFileManager.defaultManager().createFileAtPath(filePath.path!, contents: nil, attributes: nil)
+        return filePath
+    }
+
+    func writeLocationToFile(locations: NSArray?, filePath: NSURL) {
+        if (locations == nil || locations!.count == 0) {
+            return
+        }
         let convertedLocations: NSMutableArray = NSMutableArray()
         // Prepare json object
         for location in locations as! [Location] {
@@ -114,9 +181,41 @@ class SettingsController: UITableViewController {
         let json = JSON(wrappedLocations)
         let str = json.description
         let data = str.dataUsingEncoding(NSUTF8StringEncoding)!
+        NSFileManager.defaultManager().createFileAtPath(filePath.path!, contents: nil, attributes: nil)
         let file = NSFileHandle(forWritingAtPath: filePath.path!)
         if (file != nil) {
             file!.writeData(data)
+        }
+    }
+
+    func saveJsonToCoreData(filePath: NSURL) {
+        let jsonData: NSData = NSData(contentsOfURL: filePath)!
+        let json = JSON(data: jsonData)
+        let privateContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        privateContext.persistentStoreCoordinator = managedObjectContext.persistentStoreCoordinator
+        privateContext.performBlock {
+            for (_, subJson): (String, JSON) in json["locations"] {
+                let newLocation: Location = (NSEntityDescription.insertNewObjectForEntityForName("Location", inManagedObjectContext: privateContext) as? Location)!
+                newLocation.timestamp = NSDate(timeIntervalSince1970: subJson["timestampMs"].doubleValue / 1000.0)
+                newLocation.latitude = subJson["latitudeE7"].doubleValue / 10000000.0
+                newLocation.longitude = subJson["longitudeE7"].doubleValue / 10000000.0
+                newLocation.altitude = subJson["altitude"].doubleValue
+                newLocation.horizontalAccuracy = subJson["accuracy"].doubleValue
+                newLocation.verticalAccuracy = subJson["verticalAccuracy"].doubleValue
+                newLocation.speed = subJson["velocity"].doubleValue
+                do {
+                    try privateContext.save()
+                } catch let error {
+                    print("Could not save Location \(error)")
+                }
+                dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+                    self.dataMessage = "Importing " + newLocation.timestamp!.description
+                    self.tableView.reloadData() }
+            }
+            dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+                self.dataMessage = filePath.lastPathComponent! + " has been imported."
+                self.tableView.reloadSections(NSIndexSet(index: 2), withRowAnimation: UITableViewRowAnimation.None)
+            }
         }
     }
 
@@ -164,34 +263,4 @@ class SettingsController: UITableViewController {
      return true
      }
      */
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        switch segue.identifier! {
-        case "DistanceFilter":
-            if let destinationVC = segue.destinationViewController as? ConfigurationController {
-                destinationVC.category = destinationVC.DISTANCE_FILTER
-            }
-            break
-        case "DesiredAccuracy":
-            if let destinationVC = segue.destinationViewController as? ConfigurationController {
-                destinationVC.category = destinationVC.DESIRED_ACCURACY
-            }
-            break
-        default:
-            break
-        }
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-
-    @IBAction func sTrackMe(sender: UISwitch) {
-        if (sender.on) {
-            LocationManager.shared.start()
-        } else {
-            LocationManager.shared.stop()
-        }
-    }
 }

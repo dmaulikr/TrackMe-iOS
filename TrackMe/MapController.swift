@@ -74,8 +74,10 @@ class MapController: UIViewController, GMSMapViewDelegate {
     }
 
     override func viewWillAppear(animated: Bool) {
-        floatingBar.title = "All"
-        let locations = fetchLocations(nil)
+        let todayString = dateFormatter.stringFromDate(NSDate())
+        floatingBar.title = todayString
+        let today = dateFormatter.dateFromString(todayString)
+        let locations = fetchLocations(today)
         updateMapViewByLocations(locations)
     }
 

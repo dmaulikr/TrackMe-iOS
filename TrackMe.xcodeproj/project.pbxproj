@@ -23,12 +23,13 @@
 		4F08E9A11CEE9CEE00B932BA /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08E9A01CEE9CEE00B932BA /* DatePickerDialog.swift */; };
 		4F393F601CE46F3200E48AB8 /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F393F5E1CE46F3200E48AB8 /* Location+CoreDataProperties.swift */; };
 		4F393F611CE46F3200E48AB8 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F393F5F1CE46F3200E48AB8 /* Location.swift */; };
+		4F7386041CFEA6EB008A3C80 /* ImportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7386031CFEA6EB008A3C80 /* ImportController.swift */; };
+		4F7386061CFEAC8E008A3C80 /* ImportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7386051CFEAC8E008A3C80 /* ImportCell.swift */; };
 		4F7BDEF71CD9E5A400AC97B2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7BDEF61CD9E5A400AC97B2 /* LocationManager.swift */; };
 		4F7BDEFE1CE04F0500AC97B2 /* Configuration+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7BDEFC1CE04F0500AC97B2 /* Configuration+CoreDataProperties.swift */; };
 		4F7BDEFF1CE04F0500AC97B2 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7BDEFD1CE04F0500AC97B2 /* Configuration.swift */; };
 		4FC510101CFC4EED0060E897 /* Pods_TrackMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A925AA9C05815C685CC021F /* Pods_TrackMe.framework */; };
 		4FC510141CFC510D0060E897 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC510131CFC510D0060E897 /* SwiftyJSON.framework */; };
-		4FC510161CFC66F70060E897 /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC510151CFC66F70060E897 /* ObjectMapper.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,14 +73,12 @@
 		4F08E9A01CEE9CEE00B932BA /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
 		4F393F5E1CE46F3200E48AB8 /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4F393F5F1CE46F3200E48AB8 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		4F7386031CFEA6EB008A3C80 /* ImportController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportController.swift; sourceTree = "<group>"; };
+		4F7386051CFEAC8E008A3C80 /* ImportCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportCell.swift; sourceTree = "<group>"; };
 		4F7BDEF61CD9E5A400AC97B2 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		4F7BDEFC1CE04F0500AC97B2 /* Configuration+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Configuration+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4F7BDEFD1CE04F0500AC97B2 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
-		4FC510091CFC4A100060E897 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Pods/../build/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
-		4FC5100B1CFC4D000060E897 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Pods/../build/Release-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
-		4FC510111CFC4F230060E897 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Pods/../build/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		4FC510131CFC510D0060E897 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../Library/Developer/Xcode/DerivedData/TrackMe-esgjguirtlchmlgwbztfnkklgeww/Build/Products/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
-		4FC510151CFC66F70060E897 /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = "Pods/../build/Release-iphoneos/ObjectMapper.framework"; sourceTree = "<group>"; };
 		9A925AA9C05815C685CC021F /* Pods_TrackMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrackMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC937EB98B6EC7A13093777E /* Pods-TrackMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrackMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrackMe/Pods-TrackMe.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,7 +88,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FC510161CFC66F70060E897 /* ObjectMapper.framework in Frameworks */,
 				4FC510141CFC510D0060E897 /* SwiftyJSON.framework in Frameworks */,
 				4F04E0201CD8A4E500055CB9 /* CoreData.framework in Frameworks */,
 				4FC510101CFC4EED0060E897 /* Pods_TrackMe.framework in Frameworks */,
@@ -156,6 +154,8 @@
 				4F04DFE71CD8223200055CB9 /* MapController.swift */,
 				4F04E0171CD83F4200055CB9 /* SettingsController.swift */,
 				4F04DFE91CD8223200055CB9 /* SummaryController.swift */,
+				4F7386031CFEA6EB008A3C80 /* ImportController.swift */,
+				4F7386051CFEAC8E008A3C80 /* ImportCell.swift */,
 			);
 			path = TrackMe;
 			sourceTree = "<group>";
@@ -181,11 +181,7 @@
 		ABE6378E7348F1B7713104CC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4FC510151CFC66F70060E897 /* ObjectMapper.framework */,
 				4FC510131CFC510D0060E897 /* SwiftyJSON.framework */,
-				4FC510111CFC4F230060E897 /* SwiftyJSON.framework */,
-				4FC5100B1CFC4D000060E897 /* SwiftyJSON.framework */,
-				4FC510091CFC4A100060E897 /* SwiftyJSON.framework */,
 				9A925AA9C05815C685CC021F /* Pods_TrackMe.framework */,
 			);
 			name = Frameworks;
@@ -391,7 +387,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F04E01C1CD8696400055CB9 /* ConfigurationController.swift in Sources */,
+				4F7386061CFEAC8E008A3C80 /* ImportCell.swift in Sources */,
 				4F04E0181CD83F4200055CB9 /* SettingsController.swift in Sources */,
+				4F7386041CFEA6EB008A3C80 /* ImportController.swift in Sources */,
 				4F393F601CE46F3200E48AB8 /* Location+CoreDataProperties.swift in Sources */,
 				4F7BDEFE1CE04F0500AC97B2 /* Configuration+CoreDataProperties.swift in Sources */,
 				4F04DFEA1CD8223200055CB9 /* SummaryController.swift in Sources */,
@@ -548,6 +546,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -567,6 +566,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
