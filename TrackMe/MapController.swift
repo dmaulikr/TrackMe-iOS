@@ -30,7 +30,6 @@ class MapController: UIViewController, GMSMapViewDelegate {
     required init?(coder aDecoder: NSCoder) {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         timeFormatter.dateFormat = "HH:mm"
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let circleImage = UIImage(named: "circle")!.imageWithRenderingMode(.AlwaysTemplate)
         circleRed = UIImageView(image: circleImage)
         circleRed.tintColor = UIColor(red: 0.74, green: 0.21, blue: 0.18, alpha: 1.0)
@@ -44,6 +43,7 @@ class MapController: UIViewController, GMSMapViewDelegate {
         circleGreen.tintColor = UIColor(red: 0.32, green: 0.64, blue: 0.32, alpha: 1.0)
         circleGray = UIImageView(image: circleImage)
         circleGray.tintColor = UIColor.grayColor()
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         self.managedObjectContext = appDelegate.managedObjectContext
         super.init(coder: aDecoder)
     }

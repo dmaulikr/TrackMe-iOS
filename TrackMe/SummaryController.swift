@@ -8,19 +8,138 @@
 
 import UIKit
 import Charts
+import CoreData
+import CoreLocation
 
-class SummaryController: UIViewController {
+class SummaryController: UIViewController, ChartViewDelegate {
 
-    @IBOutlet var movingDistanceChart: LineChartView!
+    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var travelingDistanceChart: LineChartView!
+
+    var managedObjectContext: NSManagedObjectContext
+    let weekdays: [String] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+    let travelingDistances: [Double] = [1, 2, 3, 4, 5, 6, 7]
+    var currentWeekStartDay: NSDate?
+
+    let dateFormatter = NSDateFormatter()
+
+    required init?(coder aDecoder: NSCoder) {
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        self.managedObjectContext = appDelegate.managedObjectContext
+        super.init(coder: aDecoder)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        movingDistanceChart.noDataText = "No Data"
+        scrollView.backgroundColor = UIColor.whiteColor()
+
         // Do any additional setup after loading the view, typically from a nib.
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        let startDate = calculateWeekStartDay(NSDate())
+        let weeklyLocations = fetchWeeklyLocations(startDate)
+        let dailyTravelingDistances = calculateDailyTravelingDistances(weeklyLocations)
+        initTravelingDistanceChart()
+        setTravelingDistanceChartData(dailyTravelingDistances)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    func calculateDailyTravelingDistances(weeklyLocations: [NSArray]) -> [Double] {
+        var travelingDistances: [Double] = [0, 0, 0, 0, 0, 0, 0]
+        for dayCount: Int in 0..<7 {
+            let dailyLocations = weeklyLocations[dayCount]
+            let loopTimes = dailyLocations.count - 1
+            if (loopTimes < 1) {
+                continue
+            }
+            for locationCount: Int in 0..<loopTimes {
+                let firstLocation = dailyLocations[locationCount] as! Location
+                let secondLocation = dailyLocations[locationCount + 1] as! Location
+                let first = CLLocation(latitude: firstLocation.latitude as! CLLocationDegrees,
+                    longitude: firstLocation.longitude as! CLLocationDegrees)
+                let second = CLLocation(latitude: secondLocation.latitude as! CLLocationDegrees,
+                    longitude: secondLocation.longitude as! CLLocationDegrees)
+                travelingDistances[dayCount] += first.distanceFromLocation(second)
+            }
+        }
+        return travelingDistances
+    }
+
+    func calculateWeekStartDay(today: NSDate) -> NSDate {
+        let adjust: Int = 1 - getDayOfWeek(today)
+        let todayString = dateFormatter.stringFromDate(today)
+        let startDay = dateFormatter.dateFromString(todayString)!
+        currentWeekStartDay = startDay.dateByAddingTimeInterval(24 * 60 * 60 * Double(adjust))
+        return currentWeekStartDay!
+    }
+
+    func fetchWeeklyLocations(startDate: NSDate) -> [NSArray] {
+        var weeklyLocations = [NSArray](count: 7, repeatedValue: NSArray())
+        for i: Int in 0..<7 {
+            let fetchRequest = NSFetchRequest()
+            let entityDescription = NSEntityDescription.entityForName("Location", inManagedObjectContext: self.managedObjectContext)
+            let predicate: NSPredicate
+            let firstDate = startDate.dateByAddingTimeInterval(60 * 60 * 24 * Double(i))
+            let secondDate = firstDate.dateByAddingTimeInterval(60 * 60 * 24)
+            predicate = NSPredicate(format: "(timestamp > %@) AND (timestamp < %@)", firstDate, secondDate)
+            fetchRequest.entity = entityDescription
+            fetchRequest.predicate = predicate
+            var locations = NSArray()
+            do {
+                locations = try self.managedObjectContext.executeFetchRequest(fetchRequest)
+            } catch {
+                let fetchError = error as NSError
+                print(fetchError)
+            }
+            weeklyLocations[i] = locations
+        }
+        return weeklyLocations
+    }
+
+    func getDayOfWeek(day: NSDate) -> Int {
+        let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        let myComponents = myCalendar.components(.Weekday, fromDate: day)
+        let weekDay = myComponents.weekday
+        return weekDay
+    }
+
+    func initTravelingDistanceChart() {
+        travelingDistanceChart.noDataText = "No Data Provided."
+        travelingDistanceChart.descriptionText = ""
+        travelingDistanceChart.legend.enabled = false
+        travelingDistanceChart.rightAxis.drawLabelsEnabled = false
+        travelingDistanceChart.rightAxis.axisMinValue = 0
+        travelingDistanceChart.leftAxis.axisMinValue = 0
+        travelingDistanceChart.xAxis.labelPosition = .Bottom
+        travelingDistanceChart.xAxis.drawGridLinesEnabled = false
+        travelingDistanceChart.xAxis.setLabelsToSkip(0)
+    }
+
+    func setTravelingDistanceChartData(travelingDistances: [Double]) {
+        var yVals: [ChartDataEntry] = [ChartDataEntry]()
+        for i in 0 ..< weekdays.count {
+            yVals.append(ChartDataEntry(value: travelingDistances[i], xIndex: i))
+        }
+        let set1: LineChartDataSet = LineChartDataSet(yVals: yVals, label: "First Set")
+        set1.axisDependency = .Left
+        set1.setColor(UIColor.redColor().colorWithAlphaComponent(0.5))
+        set1.setCircleColor(UIColor.redColor())
+        set1.lineWidth = 2.0
+        set1.circleRadius = 6.0
+        set1.fillAlpha = 65 / 255.0
+        set1.fillColor = UIColor.redColor()
+        set1.drawFilledEnabled = true
+        set1.highlightColor = UIColor.whiteColor()
+        set1.drawCircleHoleEnabled = true
+        var dataSets: [LineChartDataSet] = [LineChartDataSet]()
+        dataSets.append(set1)
+        let data: LineChartData = LineChartData(xVals: weekdays, dataSets: dataSets)
+        self.travelingDistanceChart.data = data
     }
 }
