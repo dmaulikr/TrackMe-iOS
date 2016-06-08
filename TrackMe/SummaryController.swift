@@ -20,11 +20,14 @@ class SummaryController: UIViewController, ChartViewDelegate {
     let weekdays: [String] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     let travelingDistances: [Double] = [1, 2, 3, 4, 5, 6, 7]
     var currentWeekStartDay: NSDate?
+    var thisWeekStartDay: NSDate?
 
     let dateFormatter = NSDateFormatter()
+    let titleDateFormatter = NSDateFormatter()
 
     required init?(coder aDecoder: NSCoder) {
         dateFormatter.dateFormat = "yyyy-MM-dd"
+        titleDateFormatter.dateFormat = "MMM d"
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         self.managedObjectContext = appDelegate.managedObjectContext
         super.init(coder: aDecoder)
@@ -33,21 +36,56 @@ class SummaryController: UIViewController, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.backgroundColor = UIColor.whiteColor()
+        initTravelingDistanceChart()
 
         // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func viewWillAppear(animated: Bool) {
-        let startDate = calculateWeekStartDay(NSDate())
-        let weeklyLocations = fetchWeeklyLocations(startDate)
+        self.navigationItem.title = "This Week"
+        thisWeekStartDay = calculateWeekStartDay(NSDate())
+        currentWeekStartDay = calculateWeekStartDay(NSDate())
+        let weeklyLocations = fetchWeeklyLocations(thisWeekStartDay!)
         let dailyTravelingDistances = calculateDailyTravelingDistances(weeklyLocations)
-        initTravelingDistanceChart()
         setTravelingDistanceChartData(dailyTravelingDistances)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    @IBAction func prevWeek(sender: UIBarButtonItem) {
+        currentWeekStartDay = currentWeekStartDay!.dateByAddingTimeInterval(-24 * 60 * 60 * 7)
+        printTitle()
+        updateTravelingDistancesChart()
+    }
+
+    @IBAction func nextWeek(sender: UIBarButtonItem) {
+        if (currentWeekStartDay!.isEqualToDate(thisWeekStartDay!)) {
+            return
+        }
+        currentWeekStartDay = currentWeekStartDay!.dateByAddingTimeInterval(24 * 60 * 60 * 7)
+        printTitle()
+        updateTravelingDistancesChart()
+    }
+
+    func printTitle() {
+        if (currentWeekStartDay!.isEqualToDate(thisWeekStartDay!)) {
+            self.navigationItem.title = "This Week"
+        } else if (currentWeekStartDay!.dateByAddingTimeInterval(24 * 60 * 60 * 7).isEqualToDate(thisWeekStartDay!)) {
+            self.navigationItem.title = "Last Week"
+        } else {
+            let currentWeekEndDay = currentWeekStartDay!.dateByAddingTimeInterval(24 * 60 * 60 * 6)
+            self.navigationItem.title = titleDateFormatter.stringFromDate(currentWeekStartDay!) + "   to   "
+                + titleDateFormatter.stringFromDate(currentWeekEndDay)
+        }
+    }
+
+    func updateTravelingDistancesChart() {
+        let weeklyLocations = fetchWeeklyLocations(currentWeekStartDay!)
+        let dailyTravelingDistances = calculateDailyTravelingDistances(weeklyLocations)
+        setTravelingDistanceChartData(dailyTravelingDistances)
     }
 
     func calculateDailyTravelingDistances(weeklyLocations: [NSArray]) -> [Double] {
@@ -131,12 +169,14 @@ class SummaryController: UIViewController, ChartViewDelegate {
         set1.setColor(UIColor.redColor().colorWithAlphaComponent(0.5))
         set1.setCircleColor(UIColor.redColor())
         set1.lineWidth = 2.0
-        set1.circleRadius = 6.0
+        set1.circleRadius = 4.0
         set1.fillAlpha = 65 / 255.0
         set1.fillColor = UIColor.redColor()
         set1.drawFilledEnabled = true
         set1.highlightColor = UIColor.whiteColor()
         set1.drawCircleHoleEnabled = true
+        set1.mode = .CubicBezier
+        set1.cubicIntensity = 0.2
         var dataSets: [LineChartDataSet] = [LineChartDataSet]()
         dataSets.append(set1)
         let data: LineChartData = LineChartData(xVals: weekdays, dataSets: dataSets)

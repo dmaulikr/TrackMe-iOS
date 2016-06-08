@@ -158,8 +158,16 @@
                         </variation>
                     </scrollView>
                     <navigationItem key="navigationItem" title="Title" id="S4B-7Z-3aV">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="gzA-rI-hVZ"/>
-                        <barButtonItem key="rightBarButtonItem" image="forward" id="bC7-Bz-nuN"/>
+                        <barButtonItem key="leftBarButtonItem" image="back" id="gzA-rI-hVZ">
+                            <connections>
+                                <action selector="prevWeek:" destination="8rJ-Kc-sve" id="NeY-eY-zUe"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="forward" id="bC7-Bz-nuN">
+                            <connections>
+                                <action selector="nextWeek:" destination="8rJ-Kc-sve" id="BoX-85-CiZ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="400" height="1200"/>
