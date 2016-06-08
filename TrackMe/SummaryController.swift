@@ -10,12 +10,14 @@ import UIKit
 import Charts
 import CoreData
 import CoreLocation
+import HealthKit
 
 class SummaryController: UIViewController, ChartViewDelegate {
 
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var travelingDistanceChart: LineChartView!
 
+    let healthStore = HKHealthStore()
     var managedObjectContext: NSManagedObjectContext
     let weekdays: [String] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     let travelingDistances: [Double] = [1, 2, 3, 4, 5, 6, 7]
@@ -45,9 +47,16 @@ class SummaryController: UIViewController, ChartViewDelegate {
         self.navigationItem.title = "This Week"
         thisWeekStartDay = calculateWeekStartDay(NSDate())
         currentWeekStartDay = calculateWeekStartDay(NSDate())
+
+        // Traveling chart
         let weeklyLocations = fetchWeeklyLocations(thisWeekStartDay!)
         let dailyTravelingDistances = calculateDailyTravelingDistances(weeklyLocations)
         setTravelingDistanceChartData(dailyTravelingDistances)
+
+        // Walking chart
+        checkAvailability()
+        fetchSteps(thisWeekStartDay!)
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,6 +77,24 @@ class SummaryController: UIViewController, ChartViewDelegate {
         currentWeekStartDay = currentWeekStartDay!.dateByAddingTimeInterval(24 * 60 * 60 * 7)
         printTitle()
         updateTravelingDistancesChart()
+    }
+
+    func fetchSteps(startDay: NSDate) {
+
+    }
+
+    func checkAvailability() -> Bool {
+        var isAvailable = false
+        if (!HKHealthStore.isHealthDataAvailable()) {
+            return false
+        }
+        let stepsAndWalkingDistance = NSSet(objects: HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierStepCount)!,
+            HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDistanceWalkingRunning)!)
+        healthStore.requestAuthorizationToShareTypes(nil, readTypes: stepsAndWalkingDistance as? Set<HKObjectType>) {
+            (success, error) -> Void in
+            isAvailable = success
+        }
+        return isAvailable
     }
 
     func printTitle() {
@@ -132,7 +159,7 @@ class SummaryController: UIViewController, ChartViewDelegate {
             do {
                 locations = try self.managedObjectContext.executeFetchRequest(fetchRequest)
             } catch {
-                let fetchError = error as NSError
+                let fetchError = error as! NSError
                 print(fetchError)
             }
             weeklyLocations[i] = locations
