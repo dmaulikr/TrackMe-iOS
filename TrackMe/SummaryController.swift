@@ -14,7 +14,6 @@ import HealthKit
 
 class SummaryController: UIViewController, ChartViewDelegate {
 
-    @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var travelingDistanceChart: LineChartView!
     @IBOutlet var walkingDistanceChart: LineChartView!
     @IBOutlet var stepsCountChart: BarChartView!
@@ -39,7 +38,6 @@ class SummaryController: UIViewController, ChartViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        scrollView.backgroundColor = UIColor.whiteColor()
         initCharts()
 
         // Do any additional setup after loading the view, typically from a nib.
