@@ -62,7 +62,7 @@ class SettingsController: UITableViewController, ImportLocationsDelegate {
             return 2
             // Data
         case 2:
-            return 2
+            return 3
         default:
             return 0
         }
@@ -91,6 +91,27 @@ class SettingsController: UITableViewController, ImportLocationsDelegate {
                 }))
             self.presentViewController(confirmExportView, animated: true, completion: nil)
         }
+        // For Delete all
+        if (indexPath.section == 2 && indexPath.row == 2) {
+            let deleteAllView = UIAlertController(
+                title: "Delete All Locations",
+                message: "Do you really want to delete all locations?",
+                preferredStyle: UIAlertControllerStyle.Alert
+            )
+            deleteAllView.addAction(UIAlertAction(
+                title: "Cancel",
+                style: UIAlertActionStyle.Default,
+                handler: nil))
+            deleteAllView.addAction(UIAlertAction(
+                title: "Confirm",
+                style: UIAlertActionStyle.Default,
+                handler: {
+                    (alert: UIAlertAction!) in
+                    self.deleteAllLocations()
+                }))
+            self.presentViewController(deleteAllView, animated: true, completion: nil)
+        }
+
     }
 
     override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
@@ -129,12 +150,20 @@ class SettingsController: UITableViewController, ImportLocationsDelegate {
         }
     }
 
+    func deleteAllLocations() {
+        let fetchRequest = NSFetchRequest(entityName: "Location")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try self.managedObjectContext.executeRequest(deleteRequest)
+        } catch let error as NSError {
+            debugPrint(error)
+        }
+    }
+
     func fetchLocations() -> NSArray? {
         let fetchRequest = NSFetchRequest()
         let entityDescription = NSEntityDescription.entityForName("Location", inManagedObjectContext: self.managedObjectContext)
-        let predicate: NSPredicate = NSPredicate(format: "(speed > 0)")
         fetchRequest.entity = entityDescription
-        fetchRequest.predicate = predicate
         var locations = NSArray?()
         do {
             locations = try self.managedObjectContext.executeFetchRequest(fetchRequest)
