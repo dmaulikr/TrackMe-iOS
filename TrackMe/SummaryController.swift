@@ -50,12 +50,16 @@ class SummaryController: UIViewController, ChartViewDelegate {
 
         // Traveling chart
         let weeklyLocations = fetchWeeklyLocations(thisWeekStartDay!)
-        let dailyTravelingDistances = calculateDailyTravelingDistances(weeklyLocations)
-        setTravelingDistanceChartData(dailyTravelingDistances)
+        let weeklyTravelingDistances = calculateWeeklyTravelingDistances(weeklyLocations)
+        print(weeklyTravelingDistances)
+        setTravelingDistanceChartData(weeklyTravelingDistances)
 
         // Walking chart
         checkAvailability()
-        fetchSteps(thisWeekStartDay!)
+        let type = HKSampleType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDistanceWalkingRunning)
+        fetchWeeklyHealthData(thisWeekStartDay!, type: type!, unit: HKUnit.meterUnit()) { weeklyHealthData in
+            print(weeklyHealthData)
+        }
 
     }
 
@@ -77,10 +81,6 @@ class SummaryController: UIViewController, ChartViewDelegate {
         currentWeekStartDay = currentWeekStartDay!.dateByAddingTimeInterval(24 * 60 * 60 * 7)
         printTitle()
         updateTravelingDistancesChart()
-    }
-
-    func fetchSteps(startDay: NSDate) {
-
     }
 
     func checkAvailability() -> Bool {
@@ -111,11 +111,11 @@ class SummaryController: UIViewController, ChartViewDelegate {
 
     func updateTravelingDistancesChart() {
         let weeklyLocations = fetchWeeklyLocations(currentWeekStartDay!)
-        let dailyTravelingDistances = calculateDailyTravelingDistances(weeklyLocations)
-        setTravelingDistanceChartData(dailyTravelingDistances)
+        let weeklyTravelingDistances = calculateWeeklyTravelingDistances(weeklyLocations)
+        setTravelingDistanceChartData(weeklyTravelingDistances)
     }
 
-    func calculateDailyTravelingDistances(weeklyLocations: [NSArray]) -> [Double] {
+    func calculateWeeklyTravelingDistances(weeklyLocations: [NSArray]) -> [Double] {
         var travelingDistances: [Double] = [0, 0, 0, 0, 0, 0, 0]
         for dayCount: Int in 0..<7 {
             let dailyLocations = weeklyLocations[dayCount]
@@ -165,6 +165,21 @@ class SummaryController: UIViewController, ChartViewDelegate {
             weeklyLocations[i] = locations
         }
         return weeklyLocations
+    }
+
+    func fetchWeeklyHealthData(startDate: NSDate, type: HKSampleType, unit: HKUnit, completion: [Double] -> ()) {
+        let endDate = startDate.dateByAddingTimeInterval(60 * 60 * 24 * 7)
+        let predicate = HKQuery.predicateForSamplesWithStartDate(startDate, endDate: endDate, options: .None)
+        let query = HKSampleQuery(sampleType: type, predicate: predicate, limit: 0, sortDescriptors: nil,
+            resultsHandler: { (query, results, error) in
+                var weeklyHealthData: [Double] = [0, 0, 0, 0, 0, 0, 0]
+                for result in results as! [HKQuantitySample] {
+                    let index = self.getDayOfWeek(result.startDate) - 1
+                    weeklyHealthData[index] += result.quantity.doubleValueForUnit(unit)
+                }
+                completion(weeklyHealthData)
+        })
+        healthStore.executeQuery(query)
     }
 
     func getDayOfWeek(day: NSDate) -> Int {
