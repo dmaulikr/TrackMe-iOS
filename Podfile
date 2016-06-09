@@ -10,7 +10,9 @@ pod 'GoogleMaps'
 end
 
 target 'TrackMeTests' do
-
+pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+pod 'Charts'
+pod 'GoogleMaps'
 end
 
 target 'TrackMeUITests' do

@@ -11,7 +11,7 @@ import CoreData
 import SwiftyJSON
 
 protocol ImportLocationsDelegate {
-    func saveJsonToCoreData(filePath: NSURL)
+    func saveJsonToCoreData(filePath: NSURL) -> Bool
 }
 
 class SettingsController: UITableViewController, ImportLocationsDelegate {
@@ -217,9 +217,22 @@ class SettingsController: UITableViewController, ImportLocationsDelegate {
         }
     }
 
-    func saveJsonToCoreData(filePath: NSURL) {
+    func saveJsonToCoreData(filePath: NSURL) -> Bool {
         let jsonData: NSData = NSData(contentsOfURL: filePath)!
         let json = JSON(data: jsonData)
+        if (json.count == 0) {
+            let invalidJsonView = UIAlertController(
+                title: "Invalid location file",
+                message: "There is no convertable locations in " + filePath.lastPathComponent!,
+                preferredStyle: UIAlertControllerStyle.Alert
+            )
+            invalidJsonView.addAction(UIAlertAction(
+                title: "OK",
+                style: UIAlertActionStyle.Default,
+                handler: nil))
+            self.presentViewController(invalidJsonView, animated: true, completion: nil)
+            return false
+        }
         let privateContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         privateContext.persistentStoreCoordinator = managedObjectContext.persistentStoreCoordinator
         privateContext.performBlock {
@@ -246,6 +259,7 @@ class SettingsController: UITableViewController, ImportLocationsDelegate {
                 self.tableView.reloadSections(NSIndexSet(index: 2), withRowAnimation: UITableViewRowAnimation.None)
             }
         }
+        return true
     }
 
     /*

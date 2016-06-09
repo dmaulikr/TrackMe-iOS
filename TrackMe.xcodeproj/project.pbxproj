@@ -31,6 +31,7 @@
 		4F9CE0591D0847DC00743277 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9CE0581D0847DC00743277 /* HealthKit.framework */; };
 		4FC510101CFC4EED0060E897 /* Pods_TrackMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A925AA9C05815C685CC021F /* Pods_TrackMe.framework */; };
 		4FC510141CFC510D0060E897 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC510131CFC510D0060E897 /* SwiftyJSON.framework */; };
+		5895450258AC5E6F8D1D3481 /* Pods_TrackMeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93B46C30B68DAC530A06455C /* Pods_TrackMeTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		09EA1FB1D20216817477EF5C /* Pods-TrackMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrackMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrackMe/Pods-TrackMe.release.xcconfig"; sourceTree = "<group>"; };
+		1C50EB600B0338BDBB3637CC /* Pods-TrackMeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrackMeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrackMeTests/Pods-TrackMeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4F04DFE21CD8223200055CB9 /* TrackMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrackMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F04DFE51CD8223200055CB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F04DFE71CD8223200055CB9 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
@@ -82,8 +84,10 @@
 		4F9CE0571D0847DC00743277 /* TrackMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TrackMe.entitlements; sourceTree = "<group>"; };
 		4F9CE0581D0847DC00743277 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		4FC510131CFC510D0060E897 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../Library/Developer/Xcode/DerivedData/TrackMe-esgjguirtlchmlgwbztfnkklgeww/Build/Products/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
+		93B46C30B68DAC530A06455C /* Pods_TrackMeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrackMeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A925AA9C05815C685CC021F /* Pods_TrackMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrackMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC937EB98B6EC7A13093777E /* Pods-TrackMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrackMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrackMe/Pods-TrackMe.debug.xcconfig"; sourceTree = "<group>"; };
+		C3288E70975F8D8091C714FE /* Pods-TrackMeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrackMeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrackMeTests/Pods-TrackMeTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5895450258AC5E6F8D1D3481 /* Pods_TrackMeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,6 +194,7 @@
 				4F9CE0581D0847DC00743277 /* HealthKit.framework */,
 				4FC510131CFC510D0060E897 /* SwiftyJSON.framework */,
 				9A925AA9C05815C685CC021F /* Pods_TrackMe.framework */,
+				93B46C30B68DAC530A06455C /* Pods_TrackMeTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -198,6 +204,8 @@
 			children = (
 				BC937EB98B6EC7A13093777E /* Pods-TrackMe.debug.xcconfig */,
 				09EA1FB1D20216817477EF5C /* Pods-TrackMe.release.xcconfig */,
+				1C50EB600B0338BDBB3637CC /* Pods-TrackMeTests.debug.xcconfig */,
+				C3288E70975F8D8091C714FE /* Pods-TrackMeTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -229,9 +237,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F04E00F1CD8223200055CB9 /* Build configuration list for PBXNativeTarget "TrackMeTests" */;
 			buildPhases = (
+				09CCC6FB7748F71A11D717AB /* Check Pods Manifest.lock */,
 				4F04DFF41CD8223200055CB9 /* Sources */,
 				4F04DFF51CD8223200055CB9 /* Frameworks */,
 				4F04DFF61CD8223200055CB9 /* Resources */,
+				0582DC5A1F7EF45F063546A0 /* Embed Pods Frameworks */,
+				9B7FBBD62D9CD8458E88935D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -343,6 +354,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0582DC5A1F7EF45F063546A0 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrackMeTests/Pods-TrackMeTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		09CCC6FB7748F71A11D717AB /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		3FBA998C080269D9271A89C3 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -386,6 +427,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrackMe/Pods-TrackMe-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9B7FBBD62D9CD8458E88935D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrackMeTests/Pods-TrackMeTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -593,11 +649,13 @@
 		};
 		4F04E0101CD8223200055CB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C50EB600B0338BDBB3637CC /* Pods-TrackMeTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				INFOPLIST_FILE = TrackMeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.haoboji.TrackMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "6e9aebfd-e575-4685-82ad-6001e0322304";
@@ -607,11 +665,13 @@
 		};
 		4F04E0111CD8223200055CB9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3288E70975F8D8091C714FE /* Pods-TrackMeTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				INFOPLIST_FILE = TrackMeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.haoboji.TrackMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "6e9aebfd-e575-4685-82ad-6001e0322304";

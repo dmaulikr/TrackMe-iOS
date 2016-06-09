@@ -78,8 +78,8 @@ class ImportController: UITableViewController {
             style: UIAlertActionStyle.Default,
             handler: {
                 (alert: UIAlertAction!) in
-                self.delegate!.saveJsonToCoreData(filePath)
                 self.navigationController!.popViewControllerAnimated(true)
+                self.delegate!.saveJsonToCoreData(filePath)
             }))
         self.presentViewController(importDialog, animated: false, completion: nil)
     }
