@@ -62,7 +62,7 @@
                         <viewControllerLayoutGuide type="top" id="edp-tU-v0q"/>
                         <viewControllerLayoutGuide type="bottom" id="tZB-VS-NO2"/>
                     </layoutGuides>
-                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="udI-tq-W9l">
+                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" id="udI-tq-W9l">
                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -74,86 +74,83 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="20" y="8" width="360" height="21"/>
+                                        </variation>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TjF-Nm-Xx7" customClass="LineChartView" customModule="Charts">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="20" y="37" width="360" height="270"/>
+                                        </variation>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Walking Distance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6E2-ml-vwS">
+                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="20" y="329" width="360" height="21"/>
+                                        </variation>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sYt-u3-ccT" customClass="LineChartView" customModule="Charts">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="20" y="358" width="360" height="270"/>
+                                        </variation>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Steps Count" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3bd-7t-J8J">
+                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="20" y="663" width="360" height="21"/>
+                                        </variation>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="59H-AT-UnH" customClass="BarChartView" customModule="Charts">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="20" y="692" width="360" height="270"/>
+                                        </variation>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="TjF-Nm-Xx7" secondAttribute="bottom" constant="493" id="7ae-h9-7BJ"/>
-                                    <constraint firstItem="0N9-yP-KzS" firstAttribute="top" secondItem="Yr7-i3-cfr" secondAttribute="topMargin" id="7gC-o3-i3o"/>
-                                    <constraint firstItem="0N9-yP-KzS" firstAttribute="trailing" secondItem="TjF-Nm-Xx7" secondAttribute="trailing" id="Lbp-Th-q78"/>
-                                    <constraint firstItem="TjF-Nm-Xx7" firstAttribute="top" secondItem="0N9-yP-KzS" secondAttribute="bottom" constant="8" symbolic="YES" id="NB1-eS-WuI"/>
-                                    <constraint firstItem="0N9-yP-KzS" firstAttribute="leading" secondItem="TjF-Nm-Xx7" secondAttribute="leading" id="Vg7-Lc-2xH"/>
-                                    <constraint firstItem="0N9-yP-KzS" firstAttribute="centerX" secondItem="Yr7-i3-cfr" secondAttribute="centerX" id="aGI-t1-lU0"/>
-                                    <constraint firstAttribute="height" constant="800" id="lSr-yo-XDL"/>
-                                    <constraint firstItem="0N9-yP-KzS" firstAttribute="leading" secondItem="Yr7-i3-cfr" secondAttribute="leading" constant="20" id="wUc-x1-KKx"/>
-                                </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
                                         <exclude reference="0N9-yP-KzS"/>
                                         <exclude reference="TjF-Nm-Xx7"/>
-                                    </mask>
-                                    <mask key="constraints">
-                                        <exclude reference="lSr-yo-XDL"/>
-                                        <exclude reference="7gC-o3-i3o"/>
-                                        <exclude reference="Lbp-Th-q78"/>
-                                        <exclude reference="Vg7-Lc-2xH"/>
-                                        <exclude reference="aGI-t1-lU0"/>
-                                        <exclude reference="wUc-x1-KKx"/>
-                                        <exclude reference="7ae-h9-7BJ"/>
-                                        <exclude reference="NB1-eS-WuI"/>
+                                        <exclude reference="6E2-ml-vwS"/>
+                                        <exclude reference="sYt-u3-ccT"/>
+                                        <exclude reference="3bd-7t-J8J"/>
+                                        <exclude reference="59H-AT-UnH"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="64" width="400" height="1000"/>
                                     <mask key="subviews">
                                         <include reference="0N9-yP-KzS"/>
                                         <include reference="TjF-Nm-Xx7"/>
-                                    </mask>
-                                    <mask key="constraints">
-                                        <include reference="lSr-yo-XDL"/>
-                                        <include reference="7gC-o3-i3o"/>
-                                        <include reference="Lbp-Th-q78"/>
-                                        <include reference="Vg7-Lc-2xH"/>
-                                        <include reference="aGI-t1-lU0"/>
-                                        <include reference="wUc-x1-KKx"/>
-                                        <include reference="7ae-h9-7BJ"/>
-                                        <include reference="NB1-eS-WuI"/>
+                                        <include reference="6E2-ml-vwS"/>
+                                        <include reference="sYt-u3-ccT"/>
+                                        <include reference="3bd-7t-J8J"/>
+                                        <include reference="59H-AT-UnH"/>
                                     </mask>
                                 </variation>
                             </view>
                         </subviews>
-                        <constraints>
-                            <constraint firstAttribute="bottomMargin" secondItem="Yr7-i3-cfr" secondAttribute="bottom" constant="-64" id="BZb-gm-7ny"/>
-                            <constraint firstItem="Yr7-i3-cfr" firstAttribute="centerX" secondItem="udI-tq-W9l" secondAttribute="centerX" id="T4l-2O-BoU"/>
-                            <constraint firstAttribute="trailing" secondItem="Yr7-i3-cfr" secondAttribute="trailing" id="ocv-QB-dzh"/>
-                            <constraint firstItem="Yr7-i3-cfr" firstAttribute="leading" secondItem="udI-tq-W9l" secondAttribute="leading" id="vrD-iu-CYK"/>
-                            <constraint firstItem="Yr7-i3-cfr" firstAttribute="top" secondItem="udI-tq-W9l" secondAttribute="topMargin" constant="64" id="zlY-7i-2Ft"/>
-                        </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="Yr7-i3-cfr"/>
                             </mask>
-                            <mask key="constraints">
-                                <exclude reference="BZb-gm-7ny"/>
-                                <exclude reference="T4l-2O-BoU"/>
-                                <exclude reference="ocv-QB-dzh"/>
-                                <exclude reference="vrD-iu-CYK"/>
-                                <exclude reference="zlY-7i-2Ft"/>
-                            </mask>
                         </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
+                        <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                            <rect key="frame" x="0.0" y="0.0" width="400" height="1200"/>
                             <mask key="subviews">
                                 <include reference="Yr7-i3-cfr"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="BZb-gm-7ny"/>
-                                <include reference="T4l-2O-BoU"/>
-                                <include reference="ocv-QB-dzh"/>
-                                <include reference="vrD-iu-CYK"/>
-                                <include reference="zlY-7i-2Ft"/>
                             </mask>
                         </variation>
                     </scrollView>
@@ -173,7 +170,9 @@
                     <size key="freeformSize" width="400" height="1200"/>
                     <connections>
                         <outlet property="scrollView" destination="udI-tq-W9l" id="bm4-si-W0q"/>
+                        <outlet property="stepsCountChart" destination="59H-AT-UnH" id="GAP-kc-gYB"/>
                         <outlet property="travelingDistanceChart" destination="TjF-Nm-Xx7" id="puZ-bI-0Sk"/>
+                        <outlet property="walkingDistanceChart" destination="sYt-u3-ccT" id="3Tb-hW-Yie"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>

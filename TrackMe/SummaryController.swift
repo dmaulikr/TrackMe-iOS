@@ -16,6 +16,8 @@ class SummaryController: UIViewController, ChartViewDelegate {
 
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var travelingDistanceChart: LineChartView!
+    @IBOutlet var walkingDistanceChart: LineChartView!
+    @IBOutlet var stepsCountChart: BarChartView!
 
     let healthStore = HKHealthStore()
     var managedObjectContext: NSManagedObjectContext
@@ -38,7 +40,7 @@ class SummaryController: UIViewController, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.backgroundColor = UIColor.whiteColor()
-        initTravelingDistanceChart()
+        initCharts()
 
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -189,8 +191,9 @@ class SummaryController: UIViewController, ChartViewDelegate {
         return weekDay
     }
 
-    func initTravelingDistanceChart() {
-        travelingDistanceChart.noDataText = "No Data Provided."
+    func initCharts() {
+        // Traveling chart
+        travelingDistanceChart.noDataText = "No Traveling Data Provided."
         travelingDistanceChart.descriptionText = ""
         travelingDistanceChart.legend.enabled = false
         travelingDistanceChart.rightAxis.drawLabelsEnabled = false
@@ -199,6 +202,16 @@ class SummaryController: UIViewController, ChartViewDelegate {
         travelingDistanceChart.xAxis.labelPosition = .Bottom
         travelingDistanceChart.xAxis.drawGridLinesEnabled = false
         travelingDistanceChart.xAxis.setLabelsToSkip(0)
+        // Walking chart
+        walkingDistanceChart.noDataText = "No Walking Data Provided."
+        walkingDistanceChart.descriptionText = ""
+        walkingDistanceChart.legend.enabled = false
+        walkingDistanceChart.rightAxis.drawLabelsEnabled = false
+        walkingDistanceChart.rightAxis.axisMinValue = 0
+        walkingDistanceChart.leftAxis.axisMinValue = 0
+        walkingDistanceChart.xAxis.labelPosition = .Bottom
+        walkingDistanceChart.xAxis.drawGridLinesEnabled = false
+        walkingDistanceChart.xAxis.setLabelsToSkip(0)
     }
 
     func setTravelingDistanceChartData(travelingDistances: [Double]) {
